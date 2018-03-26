@@ -6,75 +6,51 @@ tags: [kubernetes, jenkins]
 
 ## 部署nfs服务
 需要把jenkins的home目录做持久化，解决方案用nfs
-  ①用外部nfs
-  ②在k8s里面部署一个nfs服务
+  ①用外部nfs服务
+  ②在docker里面部署一个nfs服务
   我们使用第二种方案
 这里还可以把编排到某个node，可以参考<br>https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
 
-
-### nfs.yaml
-```
-apiVersion: apps/v1beta2
-kind: Deployment
-metadata:
-  name: nfs
-  labels:
-    app: nfs
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nfs
-  template:
-    metadata:
-      labels:
-        app: nfs
-    spec:
-      containers:
-      - name: nfs-server
-        image: itsthenetwork/nfs-server-alpine:7
-        imagePullPolicy: IfNotPresent
-        securityContext:
-          privileged: true
-        ports:
-        - containerPort: 2049
-        env:
-        - name: SHARED_DIRECTORY
-          value: "/nfsshare"
-        volumeMounts:
-        - name: nfsshare
-          mountPath: /nfsshare
-      volumes:
-      - name: nfsshare
-        hostPath:
-         # 目录在node节点下
-         path: /opt/nfsshare
-         # 文件夹如果不存在即创建一个
-         type: DirectoryOrCreate
-         
----
-kind: Service
-apiVersion: v1
-metadata:
-  labels:
-    app: nfs
-  name: nfs
-spec:
-  ports:
-  - port: 2049
-    targetPort: 2049
-  selector:
-    app: nfs  
-```
-
 ### 部署nfs
+nfs所在机器ip：192.168.10.93
 ```
-$ kubectl apply -f nfs.yaml
+$ docker run -d -p 2049:2049 \
+   --name nfs \
+   --privileged \ 
+   -e SHARED_DIRECTORY=/nfsshare \
+   -v /opt/nfsshare:/nfsshare \
+   --restart=always \
+   itsthenetwork/nfs-server-alpine:7
+```
 
-#查看nfs服务ip地址，记住ip， 后面用到
-$ kubectl get pod -o wide  | grep nfs
-nfs-7b689fb468-xsmbf   1/1    Running   0    1h   192.168.166.136   node1
+### 查看nfs服务启动情况
+```
+$ docker logs nfs
+```
+```
+...
+Starting NFS in the background...
+rpc.nfsd: knfsd is currently down
+rpc.nfsd: Writing version string to kernel: -2 -3 +4 
+rpc.nfsd: Created AF_INET TCP socket.
+rpc.nfsd: Created AF_INET6 TCP socket.
+Exporting File System...
+exporting *:/nfsshare
+Starting Mountd in the background...
+```
 
+### 测试nfs服务是否正常
+```
+#创建一个test目录
+$ mkdir -p /opt/nfsshare/test
+
+#把nfs根目录挂载到/mnt/下
+$ mount -t nfs 192.168.10.93:/ /mnt/
+
+#查看/mnt/下是否有test目录, 如果有，表示正常
+$ ls /mnt/
+
+test
 ```
 
 ## 使用PersistentVolume持久化卷
@@ -101,7 +77,7 @@ spec:
   nfs:
     path: /jenkins
     #这里填nfs服务器ip（前面nfs的地址）
-    server: 192.168.166.136
+    server: 192.168.10.93
     
 ---
 kind: PersistentVolumeClaim
@@ -143,7 +119,7 @@ spec:
     - nfsvers=4.1
   nfs:
     path: /mavenLocalRepo
-    server: 192.168.166.136
+    server: 192.168.10.93
 
 ---
 kind: PersistentVolumeClaim
@@ -278,7 +254,7 @@ spec:
     - nfsvers=4.1
   nfs:
     path: /jenkins-blueocean-data
-    server: 192.168.166.136
+    server: 192.168.10.93
     
 ---
 kind: PersistentVolumeClaim
