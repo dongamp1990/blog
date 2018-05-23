@@ -1,6 +1,7 @@
 ---
 title: Kubernetes ConfigMap使用
 tags: [kubernetes, configmap]
+date: 2018-03-29
 ---
 摘自：https://jimmysong.io/kubernetes-handbook/concepts/configmap.html
 ## ConfigMap

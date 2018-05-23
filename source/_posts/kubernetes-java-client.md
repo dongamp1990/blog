@@ -1,6 +1,7 @@
 ---
 title: Kubernetes Java Client使用
 tags: [kubernetes]
+date: 2018-03-29
 ---
 ## 前言
 使用Kubernetes 加Jenkins CICD，那么问题来了，Jenkins里面怎么部署Kubernetes应用呢。曾经在Jenkins上搜索过几个插件，其中Kubernetes Continuous Deploy没搞懂怎么用，咨询了一技术哥们说：本质就是配置认证， 调用k8s接口实现。在他的指点下，使用Kubernetes client去调用Kubernetes接口z

@@ -1,6 +1,7 @@
 ---
 title: Docker Swarm集群使用Traefik
 tags: [docker]
+date: 2018-04-02
 ---
 
 ## 前言
@@ -41,13 +42,14 @@ services:
         - node.role == manager 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - $PWD/traefik.toml:/etc/traefik/traefik.toml
     networks:
     - traefik-net
 networks:
   traefik-net:
     external: true
 ```
-
+treafik配置文件:https://raw.githubusercontent.com/containous/traefik/master/traefik.sample.toml
 启动traefik服务
 ```
 $ docker stack deploy -c traefik.yaml traefik
@@ -61,6 +63,7 @@ docker service create \
     --publish 80:80 \
     --publish 8080:8080 \
     --mount type=bind,source=/var/run/docker.sock,target=/var/run/docker.sock \
+    --mount type=bind,source=/opt/traefik/traefik.toml,target=/etc/traefik/traefik.toml \
     --network traefik-net \
     traefik \
     --docker \

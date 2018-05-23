@@ -6,13 +6,14 @@
 title: Hexo
 subtitle:
 description:
-author: John Doe
-language:
+keywords:
+author: Dongamp
+language: zh-CN
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://dongamp1990.github.io/
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -80,6 +81,7 @@ deploy:
   type: git
   repository: https://github.com/dongamp1990/kevindong.github.io.git
   branch: master
+
 jsonContent:
   meta: true
   pages: false
@@ -96,5 +98,5 @@ jsonContent:
     link: false
     permalink: true
     excerpt: false
-    categories: true
+    categories: false
     tags: true  

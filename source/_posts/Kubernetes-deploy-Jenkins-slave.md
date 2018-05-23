@@ -1,6 +1,7 @@
 ---
 title: Kubernetes部署Jenkins并动态资源分配
 tags: [kubernetes, jenkins]
+date: 2018-03-11
 ---
 基于Kubernetes部署Jenkins，JenkinsSlave动态分配
 

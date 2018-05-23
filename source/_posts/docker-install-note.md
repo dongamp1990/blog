@@ -1,6 +1,7 @@
 ---
 title: 安装Docker日志
 tags: [docker]
+date: 2018-01-11
 ---
 安装Docker日志
 ## 安装Docker
