@@ -1,6 +1,7 @@
 # ========== Profile ========== #
 # avatar
-avatar: 'https://dn-maxfunweb.qbox.me/image640.jpeg'
+#avatar: 'https://dn-maxfunweb.qbox.me/image640.jpeg'
+avatar: 'https://avatars1.githubusercontent.com/u/6448929?s=400&v=4'
 # author name
 author: Dongamp
 # signature
@@ -12,6 +13,7 @@ social:
   # wechat and qq should be a path of qr-code image
   #wechat: /assets/example_qr.png
   qq: 
+  telegram: 
   weibo: 
   zhihu: 
   douban: 
@@ -19,9 +21,12 @@ social:
   twitter: 
   instagram: 
   stack-overflow: 
+  segmentFault: 
+  juejin: 
   v2ex: 
   bilibili: 
   linkedin: 
+  steam: 
   others: 
   rss: 
 # friends
@@ -34,18 +39,33 @@ about:
   image: '/intro/about-bg.jpg'
 
 # ========== Site ========== #
-# title of the site
-SEO_title: Dongamp
-# main title
+# title of the site (good for SEO)
+SEO_title: Dongamp Studio
+# keywords for site (good for SEO)
+SEO_keywords:
+  - dongamp
+  - 'dongamp1990'
+  - 'kevin'
 main_title: Dongamp blog
 # subtitle
 subtitle: keep learn
 # site haeder image
-site_header_image: 'http://oo12ugek5.bkt.clouddn.com/blog/images/banner.jpeg'
+site_header_image: '/intro/index-bg.jpg'
+#site_header_image: 'https://source.unsplash.com/random/800x600'
 # post haeder image
-post_header_image: 'https://dn-maxfunweb.qbox.me/imagepost-bg.jpg'
+post_header_image: '/intro/post-bg.jpg'
 # 404 image
 _404_image: '/intro/404-bg.jpg'
+
+# ========== Search ========== #
+algolia_search:
+  enable: false
+  hits:
+    per_page: 10
+  labels:
+    input_placeholder: Search for Posts
+    hits_empty: "We did not find any results for the search: ${query}"
+    hits_stats: "${hits} results found in ${time} ms"
 
 # ========== Comment ========== #
 # Fill in the field to enable the corresponding comment plugin
@@ -55,9 +75,6 @@ comment:
   livere_uid: 
   # Disqus  site: https://disqus.com/
   disqus_shortname: 
-  # Changyan  site: http://changyan.kuaizhan.com/
-  changyan_appid: 
-  changyan_conf: 
   # Gitment  site: https://github.com/imsun/gitment
   gitment_owner: 
   gitment_repo: 
@@ -65,10 +82,18 @@ comment:
   gitment_client_secret: 
   # Youyan  site: http://www.uyan.cc/
   youyan_uid: 
+  # Valine  site: https://valine.js.org/
+  valine_appId: 
+  valine_appKey: 
+  valine_placeHolder: 
 
 # ========== Analytics ========== #
-# Busuanzi pv analytics
+# enable Busuanzi analytics
 busuanzi: true
+# fill in pv or uv
+busuanzi_pv_or_uv: 'pv'
+# custom analytic slogan, '${count}' is the analytic number, DO NOT modify it.
+busuanzi_slug: 'PV: ${count} :)'
 # Baidu analytics
 baidu_analytics: 
 # Google analytics
@@ -83,12 +108,14 @@ favicon: /assets/favicon.ico
 truncate_length: 100
 # enable toc
 toc: true
+# word count & reading time
+reading_info: true
 # intro height (the default is 50 percents of the screen, you can input other number)
 index_intro_height: 30
 post_intro_height: 30
 about_intro_height: 30
 # copyright
 copyright:
-  enable: true
+  enable: false
   # https://creativecommons.org/
   license: '本文采用<a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可'

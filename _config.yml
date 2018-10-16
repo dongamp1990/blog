@@ -73,8 +73,8 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
+#theme: archer
 theme: archer
-
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
@@ -98,5 +98,5 @@ jsonContent:
     link: false
     permalink: true
     excerpt: false
-    categories: false
+    categories: true
     tags: true  
