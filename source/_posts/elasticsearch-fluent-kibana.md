@@ -171,13 +171,13 @@ networks:
 
 ## 使用
 部署成功后，访问ip:5601浏览Kibana页面了，第一次打开是如下界面。
-![avatar](http://7xp9ph.com1.z0.glb.clouddn.com/blog/images/kibana.png)
+![avatar](https://raw.githubusercontent.com/dongamp1990/blog/master/images/kibana.png)
 
 把Index pattern改成fluentd-*，点Create。如果elasticsearch已经有日志的话，会显示出来，没有的就是这样子的
-![avatar](http://7xp9ph.com1.z0.glb.clouddn.com/blog/images/kibana-noresult.png)
+![avatar](https://raw.githubusercontent.com/dongamp1990/blog/master/images/kibana-noresult.png)
 
 收集到的日志
-![avatar](http://7xp9ph.com1.z0.glb.clouddn.com/blog/images/kibana-log.png)
+![avatar](https://raw.githubusercontent.com/dongamp1990/blog/master/images/kibana-log.png)
 
 ## 增加http验证
 到处就可以用Kibana来分析收集到的日志了，目前任何人都访问kibana，没有设置登录验证，不安全，可以配合treafik做个简单的http auth验证。
