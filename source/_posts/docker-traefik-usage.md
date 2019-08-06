@@ -76,7 +76,7 @@ docker service create \
 
 
 ###  部署jenkins应用
-在master节点部署jenkins，不适用端口来访问jenkins
+在master节点部署jenkins，不使用用端口来访问jenkins
 
 run-jenkins.sh
 ```

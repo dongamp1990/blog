@@ -8,58 +8,79 @@ date: 2018-01-11
 
 ### 系统要求
 查看官方文档 https://docs.docker.com/engine/installation/
-文内使用店是centos7
 
+### CentOS7与Ubuntu下安装Docker
 
-### 删除旧的版本
+#### CentOS7
 ```
 $ sudo yum remove docker \
  docker-common \
  docker-selinux \
  docker-engine
-```
-
-### 设置Docker存储库
-安装必要的一些系统工具
-```
-$ sudo yum install -y yum-utils \
-	device-mapper-persistent-data \
-	lvm2
-```
-
-添加软件源信息
-```
-$ sudo yum-config-manager \
- --add-repo \
- https://download.docker.com/linux/centos/docker-ce.repo
-```
  
-### 安装docker-ce
-安装docker稳定版
-```
-$ sudo yum install docker-ce-stable
-```
-显示可用的版本
+$ yum install -y yum-utils device-mapper-persistent-data lvm2 curl
 
+$ yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+
+$ yum -y install docker-ce
+
+```
+查找Docker-CE的版本
 ```
 $ yum list docker-ce --showduplicates | sort -r
-docker-ce.x86_64   17.03.0.ce-1.el7.centos   docker-ce-stable
-docker-ce.x86_64   17.03.1.ce-1.el7.centos   docker-ce-stable
-docker-ce.x86_64   17.03.2.ce-1.el7.centos   docker-ce-stable
-docker-ce.x86_64   17.06.0.ce-1.el7.centos   docker-ce-stable
-docker-ce.x86_64   17.06.1.ce-1.el7.centos   docker-ce-stable
-docker-ce.x86_64   17.06.2.ce-1.el7.centos   docker-ce-stable
-docker-ce.x86_64   17.09.0.ce-1.el7.centos   docker-ce-stable
+	docker-ce.x86_64   17.03.0.ce-1.el7.centos   docker-ce-stable
+	docker-ce.x86_64   17.03.1.ce-1.el7.centos   docker-ce-stable
+	docker-ce.x86_64   17.03.2.ce-1.el7.centos   docker-ce-stable
+	docker-ce.x86_64   17.06.0.ce-1.el7.centos   docker-ce-stable
+	docker-ce.x86_64   17.06.1.ce-1.el7.centos   docker-ce-stable
+	docker-ce.x86_64   17.06.2.ce-1.el7.centos   docker-ce-stable
+	docker-ce.x86_64   17.09.0.ce-1.el7.centos   docker-ce-stable
 ```
 
 指定安装版本
 ```
+$ sudo yum -y install docker-ce-[VERSION]
+
+eg:
 $ yum install -y docker-ce-17.06.2.ce
+```
+
+#### Ubuntu
+
+```
+$ apt-get remove docker docker-engine docker.io -y
+
+$ apt-get update
+
+$ apt-get install apt-transport-https ca-certificates curl gnupg2 software-properties-common -y
+
+$ curl -fsSL http://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add -
+
+$ sudo add-apt-repository "deb [arch=amd64] http://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+
+$ apt-get update
+
+$ apt-get install docker-ce -y
+
+```
+查找Docker-CE的版本
+```
+$ apt-cache madison docker-ce
+
+#   docker-ce | 17.03.1~ce-0~ubuntu-xenial | http://mirrors.aliyun.com/docker-ce/linux/ubuntu xenial/stable amd64 Packages
+#   docker-ce | 17.03.0~ce-0~ubuntu-xenial | http://mirrors.aliyun.com/docker-ce/linux/ubuntu xenial/stable amd64 Packages
+```
+安装指定版本的Docker-CE: (VERSION例如上面的17.03.1~ce-0~ubuntu-xenial)
+```
+$ sudo apt-get -y install docker-ce=[VERSION]
+
+eg:
+$ sudo apt-get -y install docker-ce=17.03.1~ce-0~ubuntu-xenial
 ```
 
 ### 增加阿里云docker镜像，加快镜像pull速度
 ```
-#如果没有该文件可以创建一个
+#如果没有该文件可以创建一个，可以去阿里云申请个人的，也可以用以下配置的。
 $ vi /etc/docker/daemon.json 
 {
  "registry-mirrors": ["https://zln0jqua.mirror.aliyuncs.com"]
@@ -164,7 +185,7 @@ MAINTAINER dong “dongamp1990@gmail.com”
 #工作目录 
 WORKDIR /opt/
 #复制在Dockerfile目录下 复制jdk1.8.0_101.tar.gz 到 /opt目录下, 如果是docker可以识别的压缩包，目的目录不写/会自	动解压
-ADD jdk1.8.0_101.tar.gz /opt
+ADD jdk18.0_101.tar.gz /opt
 #执行命令
 RUN mv /opt/jdk1.8.0_101 /opt/jdk8
 #设置环境
